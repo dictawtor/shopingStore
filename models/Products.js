@@ -5,9 +5,11 @@
 class Products {
     // سازنده - هنگام ایجاد شیء جدید Products اجرا می‌شود
     // parent = جعبه‌ای که محصولات در آن قرار می‌گیرند، products = لیست اشیاء
-    constructor(parent, products) {
+    constructor(parent, products ,cart) {
         this.parent = parent  // ذخیره کردن عنصر حاویه
         this.products = products  // ذخیره کردن لیست محصولات
+        this.cart = cart 
+        this.parent.addEventListener("click",this)
     }
 
     // متد showProducts - تمام محصولات را نمایش می‌دهد
@@ -29,7 +31,7 @@ class Products {
          cardEle.innerHTML += infoEl
         
       
-        // ایجاد بخش اطلاعات
+      
       
 
       
@@ -58,7 +60,18 @@ class Products {
         `
         return infoJSX
     }
-
+    handleEvent(){
+       const element = event.target
+       if (element.tagName === "BUTTON") {
+        this.addToCart(element.dataset.id)
+        
+       } 
+    }
+    addToCart(id){
+    const product = this.products.find((i) => i.id === +id)
+    this.cart.products.push(product)
+  this.cart.showProducts()
+ }
 }
 
 export default Products
